@@ -139,7 +139,7 @@ const Create = () => {
                       {/* Password */}
                       <div className="w-full md:w-[48%] mt-2">
                         <div className="text-[14px] text-[#212325] font-medium	">Password</div>
-                        <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" name="password" value={values.password} onChange={handleChange} />
+                        <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" type="password" name="password" value={values.password} onChange={handleChange} />
                       </div>
                     </div>
                   </div>
@@ -212,6 +212,9 @@ const FilterStatus = ({ filter, setFilter }) => {
 
 const UserCard = ({ hit, projects }) => {
   const history = useHistory();
+
+  const goodEmploye = hit.costPerDay < hit.sellPerDay;
+
   return (
     <div
       onClick={() => history.push(`/user/${hit._id}`)}
@@ -229,6 +232,7 @@ const UserCard = ({ hit, projects }) => {
             <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="4" cy="4" r="4" fill="white" />
             </svg>
+
             <p className="text-white text-[12px] uppercase tracking-wider">{hit.availability}</p>
           </div>
         </div>
@@ -247,7 +251,8 @@ const UserCard = ({ hit, projects }) => {
       {/* infos */}
       <div className="flex flex-col flex-1 justify-between">
         <div className="flex flex-col items-center text-center my-4 space-y-1">
-          <p className="font-semibold text-lg">{hit.name}</p>
+          <p className={`font-semibold text-lg ${goodEmploye ? 'text-green-500' : 'text-red-500'}`}>{hit.name}</p>
+
         </div>
       </div>
     </div>

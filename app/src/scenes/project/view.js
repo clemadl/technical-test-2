@@ -18,20 +18,26 @@ ChartJS.register(...registerables);
 export default function ProjectView() {
   const [project, setProject] = useState(null);
   const [copied, setCopied] = React.useState(false);
-  const { id } = useParams();
+  const { id } = useParams();  //rend les params de la requete
+  
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
       const { data: u } = await api.get(`/project/${id}`);
+      console.log(id) //rend le bon résultat OK
+      // console.log(project.name) //affiche "undefined"
       setProject(u);
     })();
   }, []);
+  // console.log(project);   ici project vaut null --> c'est le pb
+
 
   useEffect(() => {
     if (copied) {
       setTimeout(() => setCopied(false), 3000);
     }
+    console.log(copied)  //rend false
   }, [copied]);
 
   if (!project) return <Loader />;
@@ -70,7 +76,7 @@ const ProjectDetails = ({ project }) => {
               <div className="flex justify-between gap-2">
                 <div className="flex gap-20">
                   <span className="w-fit text-[20px] text-[#0C1024] font-bold">Nom du projet : </span>
-                  <span className="w-fit text-[20px] text-[#0C1024] font-bold">{project.name.toString()}</span>
+                  <span className="w-fit text-[20px] text-[#0C1024] font-bold">{project.name}</span>
                 </div>
                 <div className="flex flex-1 flex-column items-end gap-3">
                   <Links project={project} />

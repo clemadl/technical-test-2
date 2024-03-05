@@ -3,6 +3,7 @@ const crypto = require("crypto");
 
 const config = require("./config");
 const { validatePassword } = require("./utils");
+const { SourceTextModule } = require("vm");
 
 const EMAIL_OR_PASSWORD_INVALID = "EMAIL_OR_PASSWORD_INVALID";
 const PASSWORD_INVALID = "PASSWORD_INVALID";
@@ -60,7 +61,10 @@ class Auth {
   async signup(req, res) {
     try {
       const { password, username, organisation } = req.body;
-
+      console.log(username)
+      console.log(organisation)
+      console.log(password)
+      
       if (password && !validatePassword(password)) return res.status(200).send({ ok: false, user: null, code: PASSWORD_NOT_VALIDATED });
 
       const user = await this.model.create({ name: username, organisation, password });
